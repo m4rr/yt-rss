@@ -205,6 +205,7 @@ func (f *Feed) String() string {
 type Item struct {
 	Title      string    `json:"title"`
 	Summary    string    `json:"summary"`
+	Desc       string    `json:"desc"`
 	Content    string    `json:"content"`
 	Categories []string  `json:"category"`
 	Link       string    `json:"link"`

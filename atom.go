@@ -43,6 +43,7 @@ func parseAtom(data []byte) (*Feed, error) {
 		next := new(Item)
 		next.Title = item.Title
 		next.Summary = item.Summary
+		next.Desc = item.DescOrig.Description
 		next.Content = item.Content.RAWContent
 		if item.Date != "" {
 			next.Date, err = parseTime(item.Date)
@@ -108,13 +109,20 @@ type atomFeed struct {
 	Updated     string     `xml:"updated"`
 }
 
+type mediaEnclosed struct {
+	Title       string `xml:"title"`
+	Description string `xml:"description"`
+	// Thumbnail   []atomLink `xml:"media:thumbnail"` // <media:thumbnail url="https://i3.ytimg.com/vi/jYlrRm-1ecQ/hqdefault.jpg" width="480" height="360"/>
+}
+
 type atomItem struct {
-	XMLName   xml.Name   `xml:"entry"`
-	Title     string     `xml:"title"`
-	Summary   string     `xml:"summary"`
-	Content   RAWContent `xml:"content"`
-	Links     []atomLink `xml:"link"`
-	Date      string     `xml:"updated"`
+	XMLName   xml.Name      `xml:"entry"`
+	Title     string        `xml:"title"`
+	Summary   string        `xml:"summary"`
+	DescOrig  mediaEnclosed `xml:"group"` // http://www.w3.org/1999/media
+	Content   RAWContent    `xml:"content"`
+	Links     []atomLink    `xml:"link"`
+	Date      string        `xml:"updated"`
 	DateValid bool
 	ID        string `xml:"id"`
 }
