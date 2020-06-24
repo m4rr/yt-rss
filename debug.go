@@ -11,7 +11,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/SlyMarbo/rss"
+	rss "github.com/m4rr/yt-rss"
 )
 
 func main() {
