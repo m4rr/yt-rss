@@ -20,7 +20,7 @@ Example usage:
 ```go
 package main
 
-import "github.com/SlyMarbo/rss"
+import "github.com/m4rr/yt-rss"
 
 func main() {
 	feed, err := rss.Fetch("http://example.com/rss")
