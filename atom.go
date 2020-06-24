@@ -109,10 +109,24 @@ type atomFeed struct {
 	Updated     string     `xml:"updated"`
 }
 
+type communityViews struct {
+	Views int `xml:"views,attr"`
+}
+
+// type communityRating struct {
+// 	Views int `xml:"views,attr"`
+// }
+
+type communityEnclosed struct {
+	Stats communityViews `xml:"statistics"`
+	// Rating
+}
+
 type mediaEnclosed struct {
-	Title       string `xml:"title"`
-	Description string `xml:"description"`
-	// Thumbnail   []atomLink `xml:"media:thumbnail"` // <media:thumbnail url="https://i3.ytimg.com/vi/jYlrRm-1ecQ/hqdefault.jpg" width="480" height="360"/>
+	Title       string            `xml:"title"`
+	Description string            `xml:"description"`
+	Thumbnail   []atomImage       `xml:"thumbnail"` // <media:thumbnail url="https://i3.ytimg.com/vi/jYlrRm-1ecQ/hqdefault.jpg" width="480" height="360"/>
+	Community   communityEnclosed `xml:"community"`
 }
 
 type atomItem struct {

@@ -206,9 +206,11 @@ type Item struct {
 	Title      string    `json:"title"`
 	Summary    string    `json:"summary"`
 	Desc       string    `json:"desc"`
+	Author     string    `json:"author"`
 	Content    string    `json:"content"`
 	Categories []string  `json:"category"`
 	Link       string    `json:"link"`
+	Published  time.Time `json:"published"`
 	Date       time.Time `json:"date"`
 	DateValid  bool
 	ID         string       `json:"id"`
