@@ -97,6 +97,7 @@ type Feed struct {
 	Refresh     time.Time           `json:"refresh"` // Earliest time this feed should next be checked.
 	Unread      uint32              `json:"unread"`  // Number of unread items. Used by aggregators.
 	FetchFunc   FetchFunc           `json:"-"`
+	ID          string              `json:"ID"`
 }
 
 type refreshError string
@@ -206,6 +207,7 @@ type Item struct {
 	Title      string    `json:"title"`
 	Summary    string    `json:"summary"`
 	Desc       string    `json:"desc"`
+	Views      int       `json:"views"`
 	Author     string    `json:"author"`
 	Content    string    `json:"content"`
 	Categories []string  `json:"category"`

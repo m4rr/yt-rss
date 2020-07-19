@@ -20,6 +20,7 @@ func parseAtom(data []byte) (*Feed, error) {
 	out := new(Feed)
 	out.Title = feed.Title
 	out.Description = feed.Description
+	out.ID = feed.ID
 	for _, link := range feed.Link {
 		if link.Rel == "alternate" || link.Rel == "" {
 			out.Link = link.Href
@@ -43,7 +44,10 @@ func parseAtom(data []byte) (*Feed, error) {
 		next := new(Item)
 		next.Title = item.Title
 		next.Summary = item.Summary
+
 		next.Desc = item.DescOrig.Description
+		next.Views = item.DescOrig.Community.Stats.Views
+
 		next.Content = item.Content.RAWContent
 		if item.Date != "" {
 			next.Date, err = parseTime(item.Date)
@@ -107,6 +111,7 @@ type atomFeed struct {
 	Image       atomImage  `xml:"image"`
 	Items       []atomItem `xml:"entry"`
 	Updated     string     `xml:"updated"`
+	ID          string     `xml:"id"`
 }
 
 type communityViews struct {
@@ -125,7 +130,7 @@ type communityEnclosed struct {
 type mediaEnclosed struct {
 	Title       string            `xml:"title"`
 	Description string            `xml:"description"`
-	Thumbnail   []atomImage       `xml:"thumbnail"` // <media:thumbnail url="https://i3.ytimg.com/vi/jYlrRm-1ecQ/hqdefault.jpg" width="480" height="360"/>
+	Thumbnail   atomThumbnail     `xml:"thumbnail"` // <media:thumbnail url="https://i3.ytimg.com/vi/jYlrRm-1ecQ/hqdefault.jpg" width="480" height="360"/>
 	Community   communityEnclosed `xml:"community"`
 }
 
@@ -147,6 +152,13 @@ type atomImage struct {
 	URL     string   `xml:"url"`
 	Height  int      `xml:"height"`
 	Width   int      `xml:"width"`
+}
+
+type atomThumbnail struct {
+	XMLName xml.Name `xml:"thumbnail"`
+	URL     string   `xml:"url,attr"`
+	Height  int      `xml:"height,attr"`
+	Width   int      `xml:"width,attr"`
 }
 
 type atomLink struct {
